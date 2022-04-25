@@ -20,7 +20,6 @@ ReactDOM.render(
       }
     />
       </Route>
-      
     </Routes>
     </BrowserRouter>
   </React.StrictMode>,

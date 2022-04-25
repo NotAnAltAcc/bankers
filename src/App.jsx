@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 
 
 function Header() {
+  const [user] = useContext(UserContext);
   return (
       <div class="bg-dark text-light">
           <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
               <div class="container-fluid">
                   <Link class="navbar-brand" to="/">Home</Link>
-                  {/*
+                  {user &&
                   <ul class="navbar-nav">
+                    <li class="nav-item">
+                          <Link to="/balance" class="nav-link">Balance</Link>
+                      </li>
                       <li class="nav-item">
-                          <Link to="/about" class="nav-link">About</Link>
+                          <Link to="/invoices" class="nav-link">Invoices</Link>
                       </li>
                   </ul>
-                */}
-                  <Link to="/Login" class="nav-link">Login</Link>
+                  }
+                  <Link to="/login" class="nav-link">Login</Link>
               </div>
           </nav>
       </div>
@@ -35,12 +39,19 @@ function Footer() {
 }
 
 
+export const UserContext = React.createContext(null);
+
 export default function App() {
+  const [user, setUser] = useState(null);
+  
   return (
     <div>
-      <Header/>
-        <Outlet/>
-      <Footer/>
+      <UserContext.Provider value={[user, setUser]}>
+        <Header/>
+          <Outlet/>
+        <Footer/>
+      </UserContext.Provider>
+      
     </div>
   );
 }
